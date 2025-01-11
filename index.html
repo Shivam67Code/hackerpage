@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Terminal</title>
+    <style>
+        /* Body styling for a dark, hacker-themed look */
+        body {
+            background-color: black;
+            color: #00ff00;
+            /* Neon green text */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            /* Prevent scrollbars for better effect */
+        }
+
+        /* Glitch Animation */
+        @keyframes glitch {
+            0% {
+                text-shadow: -2px 0 red, 2px 0 cyan;
+            }
+
+            25% {
+                text-shadow: -2px 0 cyan, 2px 0 red;
+                transform: skew(5deg);
+            }
+
+            50% {
+                text-shadow: -4px 0 green, 4px 0 blue;
+                transform: skew(-5deg);
+            }
+
+            75% {
+                text-shadow: -2px 0 blue, 2px 0 green;
+                transform: skew(2deg);
+            }
+
+            100% {
+                text-shadow: -2px 0 red, 2px 0 cyan;
+                transform: skew(-2deg);
+            }
+        }
+
+        /* Flicker Animation */
+        @keyframes flicker {
+            0% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.1;
+            }
+        }
+
+        /* Dynamic scrolling effect */
+        #output {
+            white-space: pre-line;
+            height: 90vh;
+            overflow-y: hidden;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        /* Glitch effect for terminal text */
+        .glitch {
+            animation: glitch 1s infinite;
+        }
+
+        /* Red warning for alerts */
+        .warning {
+            color: red;
+            text-transform: uppercase;
+            animation: flicker 0.1s infinite alternate;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output" class="glitch">System is Being Hacked...</div>
+    <script>
+        function randomDelay() {
+            return new Promise((resolve) => {
+                let timeout = Math.floor(Math.random() * 2000) + 500; // Random delay between 500ms - 2500ms
+                setTimeout(() => {
+                    resolve();
+                }, timeout);
+            });
+        }
+
+        async function main() {
+            const output = document.getElementById('output');
+
+            // Ellipsis Animation - Targets the output div
+            let interval = setInterval(() => {
+                if (output.innerHTML.endsWith("...")) {
+                    output.innerHTML = output.innerHTML.slice(0, -3);
+                } else {
+                    output.innerHTML += ".";
+                }
+            }, 100);
+
+            // Text Messages
+            let texts = [
+                "WARNING: Hacking attempt in progress",
+                "ALERT: System is under a hacking attack",
+                "CRITICAL: Firewall breached by hackers",
+                "EMERGENCY: Hacking detected—data is being stolen",
+                "DANGER: Hacker infiltration—system shutdown imminent",
+                "MALWARE DEPLOYED: Hacking virus corrupting files"
+            ];
+
+            // Display Messages
+            async function displayTexts() {
+                for (const item of texts) {
+                    await randomDelay(); // Wait for random delay
+                    output.innerHTML += `<br>${item}`; // Display each message
+                }
+            }
+
+            await displayTexts(); // Call the function
+
+            // Stop the ellipsis animation after displaying messages
+            clearInterval(interval);
+        }
+
+        // main();
+    </script>
+</body>
+
+</html>
